@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="flex flex-col justify-center items-center min-h-screen">
+    <form method="POST" class="rounded-lg max-w-md shadow-md bg-indigo-500 text-black p-6">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Create Character</button>
+    </form>
+</div>
+{% endblock body %}

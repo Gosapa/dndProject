@@ -4,7 +4,36 @@
     <div class="text-center text-8xl font-bold">Choose Option</div>
     <div class="flex flex-row justify-center mt-5">
         <h1 class="text-4xl text-center">Load Game</h1>
-        <h1 class="text-4xl text-center ml-5">Start Game</h1>
+        <button onClick="createGame()">Start Game</button>
     </div>
 </div>
 {% endblock body %}
+{% block script %}
+<script>
+    async function createGame() {
+        const endpointURL = "{% url 'game:create_game' %}"
+        try {
+            const response = await fetch(endpointURL, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    'X-CSRFToken' : '{{ csrf_token }}',
+                },
+                body: JSON.stringify({"thing": "here"}),
+            });
+            if (response.ok){
+                const data = await response.json()
+                console.log(data);
+                console.log(response.status)
+                const gameID = data.gameID;
+                window.location.href = "/games/" + gameID + "/create/";
+            } else {
+                console.error("Error creating game: ", response.status);  
+                console.log(response)
+            }
+        } catch (error) {
+            console.error("Error occured", error);
+        }
+    }
+</script>
+{% endblock script%}
