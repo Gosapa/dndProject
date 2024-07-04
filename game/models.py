@@ -27,16 +27,16 @@ class Character(models.Model):
     }
 
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50, default="defaultname")
+    name = models.CharField(max_length=50, default="")
     origin = models.CharField(max_length=7, choices=ORIGIN_CHOICES, default='origin1')
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, default='male')
     is_user = models.BooleanField(default=False)
-    plot = models.CharField(max_length=500, default="defaultplot")
+    plot = models.CharField(max_length=500, default="")
     stat = models.JSONField(default=dict)
     
 
     def __str__(self):
-        return f'{self.game.name}\'s character {self.name}'
+        return self.name
 
 class Log(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)

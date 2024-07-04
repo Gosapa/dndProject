@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 {% block body %}
 <div class="flex flex-col items-center justify-center min-h-screen">
-    <div class="text-center text-8xl font-bold">Choose Option</div>
+    <div class="text-center text-8xl font-bold">APPNAME</div>
     <div class="flex flex-row justify-center mt-5">
-        <h1 class="text-4xl text-center">Load Game</h1>
-        <button onClick="createGame()">Start Game</button>
+        <a href="{% url 'game:list' %}">
+            <h1 class="text-4xl text-center">Load Game</h1>
+        </a>
+        <button onClick="createGame()" class="text-4xl ml-5">Start Game</button>
     </div>
 </div>
 {% endblock body %}
@@ -19,14 +21,18 @@
                     "Content-Type": "application/json",
                     'X-CSRFToken' : '{{ csrf_token }}',
                 },
-                body: JSON.stringify({"thing": "here"}),
+                body: JSON.stringify({}),
             });
             if (response.ok){
+                if (response.status == 202) {
+                    window.location.href = "/games/list/"
+                    return
+                }
                 const data = await response.json()
                 console.log(data);
                 console.log(response.status)
                 const gameID = data.gameID;
-                window.location.href = "/games/" + gameID + "/create/";
+                window.location.href = "/games/create/" + gameID;
             } else {
                 console.error("Error creating game: ", response.status);  
                 console.log(response)

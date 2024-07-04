@@ -14,5 +14,5 @@ Faith
 Arcane
 Please generate an according log under 50 character in on line, which is going to be used for saving the game. example: "User Created character 'Jake'"
 
-Stats: {{'stats': Json with key = stat name (str), and value = stat value (int)}}
+stats: {{'stats': Json with key = stat name (str), and value = stat value (int)}}
 log = string"""
